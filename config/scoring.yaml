@@ -1,0 +1,72 @@
+# SoftSite Redevelopment Potential Score — default configuration.
+#
+# Implemented in Phase 3. Defaults come from PROJECT_BRIEF.md §7 plus Bodie's
+# Phase 0 decisions (2026-10-13). Every component is normalized 0–1 by
+# percentile rank among eligible parcels, then combined as a weighted sum and
+# scaled to 0–100, minus penalties. Component weights must sum to 1.0; the
+# weights inside each component must also sum to 1.0.
+
+version: 1
+
+components:
+  zoning_upside:
+    weight: 0.35
+    inputs:
+      # Units for residential-capable zones, GFA otherwise (Phase 2 decides which applies).
+      capacity_gap_absolute: 0.5
+      capacity_gap_ratio: 0.5
+
+  underutilization:
+    weight: 0.20
+    inputs:
+      low_building_coverage: 0.35
+      low_existing_far: 0.35
+      # Phase 0 decision #11: City GIS YEARBUILT covers ~98% of parcels.
+      # Older buildings score higher. Age = data refresh year − YEARBUILT.
+      # Parcels with no YEARBUILT are scored on the other inputs only
+      # (weights re-normalized), never assigned a guessed age.
+      building_age: 0.30
+      # Not derivable from free data yet; kept at 0 so it's visible, not hidden.
+      surface_parking_share: 0.0
+
+  site_size_shape:
+    weight: 0.15
+    inputs:
+      lot_area: 0.7          # sweet spot ~0.5–5 acres; very small lots penalized
+      compactness: 0.3
+    lot_area_sweet_spot_acres: [0.5, 5.0]
+
+  policy_tailwinds:
+    weight: 0.15
+    inputs:
+      in_recent_specific_plan: 0.4
+      on_housing_element_inventory: 0.3
+      within_half_mile_of_rail: 0.3
+    # Planned BART Santa Clara station counts only when this toggle is on.
+    include_planned_transit: false
+
+  market_momentum:
+    weight: 0.15
+    inputs:
+      pipeline_activity_half_mile_24mo: 0.7
+      zip_rent_price_trend: 0.3
+
+# Excluded from rankings by default; each one is a UI toggle.
+default_exclusions:
+  public_quasi_public_zones: true    # B, PQP, PF, OS
+  single_family_zones: true
+  historic_resources: true           # HR, PHR, MAP
+  in_pipeline: true                  # shown as "In play" instead
+  planned_development_pd: false      # Phase 0 decision #3: toggle exists, off by default
+
+# Shown in the parcel panel, never silently removed.
+flags:
+  - contamination_on_or_adjacent     # each flag shows its data date
+  - multiple_flood_zones
+  - within_200ft_of_historic
+  - low_confidence_existing_building
+  - lidar_vintage                    # YEARBUILT >= lidar_vintage_year_threshold
+  - pd_density_proxy                 # density_basis = general_plan_pd_proxy
+  - near_sjc_airport_height_unknown  # v2 will replace with real ALUCP limits
+
+lidar_vintage_year_threshold: 2021   # LiDAR flown early 2020 (Phase 0 decision #4)
