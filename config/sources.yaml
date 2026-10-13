@@ -1,0 +1,80 @@
+# SoftSite data sources — city-specific URLs and field mappings live here so
+# another city can be added without rewriting pipeline code.
+# Verified live during Phase 0 recon (2026-10-13); see docs/DATA_SOURCES.md.
+
+city:
+  id: santa_clara
+  name: Santa Clara
+  state: CA
+  # Areas and distances are computed in this projected CRS (US feet).
+  crs_projected: "EPSG:6420"   # NAD83(2011) / California zone 3 (ftUS)
+  crs_web: "EPSG:4326"
+
+http:
+  user_agent: "softsite/0.1 (academic research project)"
+  min_interval_seconds: 1.0     # be polite: at most ~1 request per second
+  timeout_seconds: 90
+  max_attempts: 4
+
+sources:
+  city_land_parcels:
+    name: City of Santa Clara GIS — Land Parcels
+    url: https://map.santaclaraca.gov/maps/rest/services/OPENDATA/RegionalBaseOpenData/MapServer/7
+    attribution: City of Santa Clara GIS
+    page_size: 5000
+    out_fields: [OBJECTID, APN, PARTYPE, PARZIP5, GPLANCRT, ZONGDSGN, YEARBUILT, ACREAGE,
+                 CSCVOTEDISTRICT, LNDPARSTATUS, SPPLAN, HistoricParcelType]
+    fields:
+      object_id: OBJECTID
+      apn: APN
+      parcel_type: PARTYPE
+      zip: PARZIP5
+      general_plan: GPLANCRT
+      zoning: ZONGDSGN
+      year_built: YEARBUILT
+      acreage_published: ACREAGE
+      council_district: CSCVOTEDISTRICT
+      status: LNDPARSTATUS
+      specific_plan: SPPLAN
+      historic_type: HistoricParcelType
+    active_status_value: A
+
+  city_zoning:
+    name: City of Santa Clara GIS — Zoning Codes
+    url: https://map.santaclaraca.gov/maps/rest/services/OPENDATA/RegionalZoningOpenData/MapServer/0
+    attribution: City of Santa Clara GIS
+    page_size: 1000          # service maxRecordCount
+    # No APN on this layer; it shares OBJECTIDs with city_land_parcels.
+    out_fields: [OBJECTID, ZONGDSGN, SPPLAN, LNDPARSTATUS, FEMAZONE_NOTE, ZoningURL, GenPlanURL]
+    fields:
+      object_id: OBJECTID
+      zoning: ZONGDSGN
+      specific_plan: SPPLAN
+      status: LNDPARSTATUS
+      flood_note: FEMAZONE_NOTE
+      zoning_url: ZoningURL
+      general_plan_url: GenPlanURL
+    # Agreement check on shared OBJECTIDs: abort if more than this share disagree.
+    max_mismatch_share: 0.005
+
+  city_site_addresses:
+    name: City of Santa Clara GIS — Site Addresses
+    url: https://map.santaclaraca.gov/maps/rest/services/OPENDATA/RegionalBaseOpenData/MapServer/2
+    attribution: City of Santa Clara GIS
+    page_size: 10000
+    out_fields: [OBJECTID, FULLADDR, ADDRNUM, FULLNAME, SITEADUN, STADZIP5]
+    fields:
+      object_id: OBJECTID
+      full_address: FULLADDR
+      unit: SITEADUN
+      zip: STADZIP5
+
+links:
+  # The GIS per-parcel ZoningURL / GenPlanURL values are inconsistent (e.g. R3
+  # parcels point at 16 different code chapters) and the code links redirect
+  # from codepublishing.com to eCode360's landing page (checked 2026-10-13).
+  # The app links these home pages instead; Phase 2 cites exact sections.
+  zoning_code_home: https://ecode360.com/SA4626
+  zoning_code_label: Santa Clara City Code, Title 18 (Zoning), on eCode360
+  general_plan_home: https://www.santaclaraca.gov/our-city/departments-a-f/community-development/planning-division/general-plan/land-use-classifications
+  general_plan_label: Santa Clara General Plan, land use classifications

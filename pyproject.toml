@@ -1,0 +1,31 @@
+[project]
+name = "softsite-pipeline"
+version = "0.1.0"
+description = "SoftSite data pipeline: pulls public parcel, zoning, and development data for Santa Clara, CA"
+requires-python = ">=3.11"
+dependencies = [
+    "geopandas>=1.0",
+    "shapely>=2.0",
+    "pyproj>=3.6",
+    "pyarrow>=16",
+    "pandas>=2.2",
+    "httpx>=0.27",
+    "pydantic>=2.7",
+    "pyyaml>=6.0",
+]
+
+[project.scripts]
+pipeline = "pipeline.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["pipeline"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

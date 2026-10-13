@@ -1,0 +1,57 @@
+code,family,note
+R1-6L,single_family,
+R1-8L,single_family,
+R1-6LHT,single_family,R1-6L with Historical (HT) combining overlay
+R2,low_density_res,
+R2HT,low_density_res,R2 with Historical (HT) combining overlay
+R2-7L,low_density_res,Duplex
+R3,multifamily,
+R3HT,multifamily,R3 with Historical (HT) combining overlay
+R3-18D,multifamily,
+R3-25D,multifamily,
+R3-36D,multifamily,
+R3-M,multifamily,Mobile home park
+R3-RV,multifamily,Recreational vehicle park
+R4,multifamily,
+R5,multifamily,
+VR,multifamily,Village Residential (Patrick Henry Drive SP)
+VHDR,multifamily,Very High Density Residential (Patrick Henry Drive SP)
+PH-R5,multifamily,Patrick Henry Very High Density Residential
+MUNC,mixed_use,Mixed Use Neighborhood Commercial (El Camino Real SP)
+MUCC,mixed_use,Mixed Use Community Commercial (El Camino Real SP)
+MUCCHT,mixed_use,MUCC with Historical (HT) combining overlay
+MURC,mixed_use,Mixed Use Regional Commercial (El Camino Real SP)
+MU-VHD,mixed_use,Mixed Use Very High Density Residential (El Camino Real SP)
+VHDM,mixed_use,Very High Density Mixed Use
+DNTW,mixed_use,Downtown
+DTHT,mixed_use,Downtown with Historical (HT) combining overlay
+LSAP,mixed_use,Lawrence Station Area Plan
+TN,mixed_use,Transit Neighborhood (Tasman East SP)
+UV,mixed_use,Urban Village (Patrick Henry Drive SP)
+UC,mixed_use,Urban Center (Patrick Henry Drive SP)
+HDF,mixed_use,High Density Flex (Patrick Henry Drive SP)
+TMU,mixed_use,Transit Oriented Mixed Use
+CN,commercial,
+CC,commercial,
+CT,commercial,
+CR,commercial,
+CD,commercial,
+CG,commercial,
+LO-RD,office_rd,
+HO-RD,office_rd,
+OA,office_rd,
+OG,office_rd,
+CP,office_rd,Commercial Park
+CP(PD),office_rd,Commercial Park & Planned Development
+CO,office_rd,
+LI,industrial,
+HI,industrial,
+ML,industrial,
+MH,industrial,
+MP,industrial,
+PD,planned_dev,Density set by each PD's approved plan; GP used as proxy from Phase 2
+PD-MC,planned_dev,Planned Development - Master Community
+PQP,public_open,
+B,public_open,Public or Quasi Public (legacy code)
+OS,public_open,
+PF,public_open,
