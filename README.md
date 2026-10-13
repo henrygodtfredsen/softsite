@@ -34,4 +34,4 @@ npm --prefix web run dev          # http://localhost:3000
 
 Code is MIT-licensed (see [`LICENSE`](LICENSE)). Data comes from public sources, each under its own terms. The base map is © OpenStreetMap contributors via OpenFreeMap / OpenMapTiles. Parcel, zoning, and address data are © City of Santa Clara GIS.
 
-Built by Bodie Godtfredsen (Santa Clara University, Economics / Real Estate) with AI-assisted development.
+Built by Henry Godtfredsen (Santa Clara University, Economics / Real Estate) with AI-assisted development.

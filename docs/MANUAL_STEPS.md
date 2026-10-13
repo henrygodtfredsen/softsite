@@ -1,102 +1,107 @@
-# Manual steps for Bodie
+# Manual steps for Bodie (step by step)
 
-Some public sources block automated downloads (see `docs/DATA_SOURCES.md`). For those, you save the files from your own browser and the pipeline reads them from `data/manual/`. This file lists exactly what to save, where, and under what name.
+A few public websites block automated downloads. Their files have to come from your own browser. The folders below already exist on your Mac. File names don't matter: keep whatever Chrome suggests, and I'll identify and organize everything. These files stay on your computer and are never uploaded to GitHub.
 
-**General rules**
-- **Web pages:** in Chrome, use File → Save Page As… → Format: **"Webpage, HTML Only"**.
-- **PDFs:** use the site's download link. Name them as shown so the pipeline can find them.
-- **Data dates:** put the date you saved things in the folder name (`YYYY-MM-DD`). That date becomes the data's "retrieved" date in the app.
-- **What gets committed:** source PDFs and saved HTML pages are **not** committed (they're gitignored). Only the structured data the pipeline extracts from them is committed, with citations back to the originals.
+## Before you start: how to save into a project folder
+
+Every time Chrome opens a **Save** window:
+
+1. Press **Cmd + Shift + G**. A "Go to folder" box appears.
+2. Paste the folder path given in that step and press **Return**.
+3. Click **Save**.
+
+The folder stays selected for the next save, so you usually only do this once per part.
+
+Three ways to save a page, depending on what you're looking at:
+- **A PDF opened in Chrome:** press **Cmd + S** (or click the download arrow at the top right).
+- **A web page as PDF:** press **Cmd + P**, set **Destination** to **"Save as PDF"**, then click **Save**.
+- **A web page as HTML** (Part 5 only): press **Cmd + S** and set **Format** to **"Webpage, HTML Only"**.
 
 ---
 
-## A. City Projects Listing (needed for Phase 4)
+## Part 1: Zoning code chapters (about 15 minutes; needed for Phase 2)
 
-**Folder:** `data/manual/projects_listing/<YYYY-MM-DD>/`
+**Folder:** `~/Projects/softsite/data/manual/source_docs/zoning`
 
-**1. The 6 listing pages** (10 projects each, 57 projects as of 2026-10-13). Save each as HTML Only:
+1. Open https://ecode360.com/SA4626. If it shows a "verify you are human" check, complete it.
+2. In the table of contents on the left, open **Title 18 (Zoning)**.
+3. Click **Chapter 18.06**. When the chapter text is showing, save it as PDF: use eCode360's printer icon if there is one, otherwise **Cmd + P → Save as PDF**.
+4. Repeat for the other nine chapters:
 
-| Save as | URL |
+| Chapter | What it covers |
 |---|---|
-| `listing_p1.html` | https://www.santaclaraca.gov/business-development/development-projects/projects-listing |
-| `listing_p2.html` | https://www.santaclaraca.gov/business-development/development-projects/projects-listing/-npage-2 |
-| `listing_p3.html` | https://www.santaclaraca.gov/business-development/development-projects/projects-listing/-npage-3 |
-| `listing_p4.html` | https://www.santaclaraca.gov/business-development/development-projects/projects-listing/-npage-4 |
-| `listing_p5.html` | https://www.santaclaraca.gov/business-development/development-projects/projects-listing/-npage-5 |
-| `listing_p6.html` | https://www.santaclaraca.gov/business-development/development-projects/projects-listing/-npage-6 |
+| 18.06 | Zoning Map and Zones |
+| 18.10 | Residential Zones |
+| 18.12 | Commercial Zones |
+| 18.14 | Mixed Use Zones |
+| 18.16 | Office and Industrial Zones |
+| 18.18 | Special Purpose Zones (open space, public) |
+| 18.20 | Planned Development Zone (PD) |
+| 18.22 | Lawrence Station Area Plan Zoning District |
+| 18.26 | Downtown Form-Based Code |
+| 18.30 | Site Planning and General Development Standards |
 
-**2. Every project's detail page.** On each listing page, open each project in a new tab (Cmd-click the project name) and save it as HTML Only. Keep Chrome's default file name; the parser identifies projects by the page content, not the file name.
+Check that each PDF includes the chapter's **tables**: the development standards (density, height, FAR, setbacks) are in tables. If a saved PDF cuts off partway through, tell me which chapter.
 
-The detail pages are where the useful fields live:
-- APN
-- file number (PLN…)
-- unit counts
-- density
-- status
+## Part 2: Specific plans (about 15 minutes; needed for Phase 2)
 
-If 57 saves is too tedious in one sitting, save the 6 listing pages first. I'll then generate a checklist of the 57 detail-page links from them.
+**Folder:** `~/Projects/softsite/data/manual/source_docs/specific_plans`
 
-Saved pages include City staff names and emails. The parser drops those fields, and the raw HTML is never committed.
+Open each link, find the **adopted plan** PDF on the page, open it, and save it with **Cmd + S**. If a page has a separate zoning or development-standards document, save that too.
 
-## B. Phase 2 source documents (zoning capacity)
+1. **El Camino Real** (adopted May 19, 2026): https://www.santaclaraca.gov/home/showpublisheddocument/89199/639095287333970000. This is the PDF itself; just save it.
+2. **Patrick Henry Drive**: https://www.santaclaraca.gov/our-city/departments-a-f/community-development/planning-division/specific-plans/patrick-henry-drive
+3. **Tasman East**: https://www.santaclaraca.gov/our-city/departments-a-f/community-development/planning-division/specific-plans/tasman-east. Get the latest revision; the page mentions November 2020.
+4. **Lawrence Station**: https://www.santaclaraca.gov/our-city/departments-a-f/community-development/planning-division/specific-plans/lawrence-station. Get the latest version.
+5. **Downtown Precise Plan**: https://www.santaclaraca.gov/our-city/departments-a-f/community-development/planning-division/specific-plans/downtown-precise-plan. Save both the **Precise Plan** and the **Form Based Code**.
+6. **Santa Clara Station Area**: https://www.santaclaraca.gov/our-city/departments-a-f/community-development/planning-division/specific-plans/santa-clara-station-focus-area-plan
+7. **Freedom Circle**: https://www.santaclaraca.gov/our-city/departments-a-f/community-development/planning-division/specific-plans/freedom-circle
+8. **Stevens Creek Focus Area**: https://www.santaclaraca.gov/home/showpublisheddocument/13934/639105681215570000. This is the PDF itself.
+9. **Old Ironsides TOC Rezonings**: https://www.santaclaraca.gov/our-city/departments-a-f/community-development/planning-division/specific-plans/old-ironsides-transit-oriented-communities-toc-rezonings
 
-**Folder:** `data/manual/source_docs/` (gitignored). Every row of `config/zoning_rules.csv` will cite one of these, by section or table and page.
+If a page has no PDF, save the page itself with **Cmd + P → Save as PDF**.
 
-### B1. Zoning code: Title 18 (eCode360)
+## Part 3: General Plan (about 5 minutes; needed for Phase 2)
 
-Start at https://ecode360.com/SA4626 and open Title 18 (Zoning). The code was comprehensively updated, so chapter numbers differ from the old links in City GIS. Use eCode360's print/PDF option for each chapter below and save it into `source_docs/zoning/`:
+**Folder:** `~/Projects/softsite/data/manual/source_docs/general_plan`
 
-| Save as | Chapter |
-|---|---|
-| `t18_ch18-06_zoning_map_and_zones.pdf` | 18.06 (zones, and how they line up with General Plan designations) |
-| `t18_ch18-10_residential.pdf` | 18.10 Residential zones |
-| `t18_ch18-12_commercial.pdf` | 18.12 Commercial zones |
-| `t18_ch18-14_mixed_use.pdf` | 18.14 Mixed-use zones |
-| `t18_ch<NN>_industrial.pdf` | the chapter(s) for industrial / employment / office-R&D zones (check the Title 18 table of contents) |
-| `t18_ch<NN>_public_open_space.pdf` | the chapter for public / quasi-public and open space zones |
-| `t18_ch<NN>_planned_development.pdf` | the chapter for Planned Development (PD) and PD-MC |
-| `t18_ch18-30_general_standards.pdf` | 18.30 Site planning and general development standards |
+1. Open https://www.santaclaraca.gov/our-city/departments-a-f/community-development/planning-division/general-plan/land-use-classifications and save it with **Cmd + P → Save as PDF**.
+2. Open https://www.santaclaraca.gov/our-city/departments-a-f/community-development/planning-division/general-plan. Find the General Plan's **Land Use** chapter (often "Chapter 5") and save that PDF.
 
-### B2. Specific plans and focus areas
+## Part 4: Housing Element sites list (about 5 minutes; needed for Phase 2)
 
-Save each into `source_docs/specific_plans/`. Each row is the plan's official page; download the adopted plan PDF from it. If a plan's zoning or development-standards tables are in a separate document, save that too, with the same prefix.
+**Folder:** `~/Projects/softsite/data/manual/source_docs/housing_element`
 
-| Save as | Page |
-|---|---|
-| `ecr_specific_plan_2026_adopted.pdf` | [El Camino Real Specific Plan](https://www.santaclaraca.gov/our-city/departments-a-f/community-development/planning-division/specific-plans/el-camino-real-specific-plan-revision). Click "View the Adopted Plan" (adopted May 19, 2026). |
-| `patrick_henry_drive_sp.pdf` | [Patrick Henry Drive](https://www.santaclaraca.gov/our-city/departments-a-f/community-development/planning-division/specific-plans/patrick-henry-drive) |
-| `tasman_east_sp.pdf` | [Tasman East](https://www.santaclaraca.gov/our-city/departments-a-f/community-development/planning-division/specific-plans/tasman-east). Get the latest revision; the page lists "Revised November 2020". |
-| `lawrence_station_area_plan.pdf` | [Lawrence Station](https://www.santaclaraca.gov/our-city/departments-a-f/community-development/planning-division/specific-plans/lawrence-station). Get the latest version, including any boundary-expansion amendment. |
-| `downtown_precise_plan.pdf` and `downtown_form_based_code.pdf` | [Downtown Precise Plan](https://www.santaclaraca.gov/our-city/departments-a-f/community-development/planning-division/specific-plans/downtown-precise-plan). Adopted Dec 5, 2023. |
-| `santa_clara_station_area_sp.pdf` | [Santa Clara Station Area Specific Plan](https://www.santaclaraca.gov/our-city/departments-a-f/community-development/planning-division/specific-plans/santa-clara-station-focus-area-plan) |
-| `freedom_circle.pdf` | [Freedom Circle](https://www.santaclaraca.gov/our-city/departments-a-f/community-development/planning-division/specific-plans/freedom-circle) |
-| `stevens_creek_focus_area.pdf` | [Stevens Creek Boulevard Focus Area](https://www.santaclaraca.gov/home/showpublisheddocument/13934/639105681215570000) (direct PDF) |
-| `old_ironsides_toc_rezonings.pdf` | [Old Ironsides TOC Rezonings](https://www.santaclaraca.gov/our-city/departments-a-f/community-development/planning-division/specific-plans/old-ironsides-transit-oriented-communities-toc-rezonings). New since Phase 0; it isn't one of the City GIS plan codes. |
+Open https://www.santaclaraca.gov/our-city/departments-a-f/community-development/planning-division/general-plan/housing-element-update and save:
 
-### B3. General Plan (for the PD stand-in densities)
+1. The **adopted / certified Housing Element** document (certified May 31, 2024).
+2. The **sites inventory** appendix (sometimes called Appendix, Table A, or "Sites Inventory"). If both an Excel and a PDF version exist, save the **Excel**.
+3. If the page links a **2025 amendment** to the sites inventory list, save that too.
 
-Save into `source_docs/general_plan/`:
+The page may use expandable sections; click headings to reveal the document links.
 
-| Save as | What |
-|---|---|
-| `gp_land_use_classifications.pdf` | The [Land Use Classifications](https://www.santaclaraca.gov/our-city/departments-a-f/community-development/planning-division/general-plan/land-use-classifications) page. Print it to PDF; it lists density ranges such as Medium Density Residential 20–36 du/ac. |
-| `gp_ch5_land_use.pdf` | The Land Use chapter of the General Plan, from the [General Plan page](https://www.santaclaraca.gov/our-city/departments-a-f/community-development/planning-division/general-plan). Look for the designation table with densities and FARs. |
+## Part 5: City Projects Listing (about 20 minutes; not needed until Phase 4)
 
-### B4. Housing Element sites inventory
+**Folder:** `~/Projects/softsite/data/manual/projects_listing`
 
-This checks the State's 37-site / 7,821-unit copy against the City's own list. Save into `source_docs/housing_element/`:
+1. Open https://www.santaclaraca.gov/business-development/development-projects/projects-listing.
+2. Save the page with **Cmd + S** and set **Format** to **"Webpage, HTML Only"**.
+3. Click each project name on the page. On the project's page, save it the same way (**Cmd + S**, HTML Only), then go back.
+4. Move to the next page of the list and repeat. There are 6 pages:
+   - https://www.santaclaraca.gov/business-development/development-projects/projects-listing
+   - …/projects-listing/-npage-2
+   - …/projects-listing/-npage-3
+   - …/projects-listing/-npage-4
+   - …/projects-listing/-npage-5
+   - …/projects-listing/-npage-6
 
-| Save as | What |
-|---|---|
-| `he_2023-2031_certified.pdf` | The certified Housing Element (HCD found it compliant on May 31, 2024), from the [Housing Element page](https://www.santaclaraca.gov/our-city/departments-a-f/community-development/planning-division/general-plan/housing-element-update). |
-| `he_sites_inventory.xlsx` (or `.pdf`) | The sites inventory appendix / Table A. Prefer the Excel version if one is offered. |
-| `he_sites_amendment_2025.pdf` | The 2025 General Plan text amendment to the sites inventory list (Planning Commission, March/April 2025), if the page links it. |
+   That's 57 projects in total (as of Oct 13, 2026). Tip: Cmd-click a project name to open it in a new tab.
 
-## C. Contamination data (needed before Phase 3)
+Saved pages include City staff contact details. The pipeline drops those, and the saved pages are never uploaded.
 
-Per Phase 0 decision #6, I'll give you the exact download pages and file names for current GeoTracker and EnviroStor data **before Phase 3 starts**. Until then, the dated January 2023 Water Board copy is used only as a development placeholder.
+## Part 6: Email to the Planning Division (2 minutes; optional)
 
-## D. Email to the Planning Division (draft; you send it)
+Send this from your own email:
 
 > **To:** planning@santaclaraca.gov
 > **Subject:** Data request: export of the Development Projects listing
@@ -110,5 +115,13 @@ Per Phase 0 decision #6, I'll give you the exact download pages and file names f
 > I'll credit the City as the source, and I won't republish staff contact information.
 >
 > Thank you for your time,
-> [Your name]
+> Henry Godtfredsen
 > Santa Clara University, Class of [year]
+
+## Later: contamination data (before Phase 3)
+
+I'll send exact steps for current GeoTracker and EnviroStor files before Phase 3 starts (Phase 0 decision #6).
+
+## When you're done
+
+Tell me which parts you finished. I'll check the folders, tell you if anything is missing or cut off, and start using the files.

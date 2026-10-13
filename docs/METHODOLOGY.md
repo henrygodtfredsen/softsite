@@ -33,7 +33,7 @@ SoftSite is a **screening tool**. It is not a zoning determination, legal advice
   - 24 ft for industrial
 
   The rule is calibrated against known buildings (see `docs/VALIDATION.md`).
-- **Buildings finished in 2021 or later** may be missing or wrong in the 2020 survey. Those parcels are flagged.
+- **Buildings finished in 2020 or later** may be missing or wrong in the survey, which was flown in early 2020. Those parcels are flagged.
 - Overture Maps buildings are used as a cross-check.
 
 ## Score (Phase 3)

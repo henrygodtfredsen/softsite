@@ -69,4 +69,6 @@ flags:
   - pd_density_proxy                 # density_basis = general_plan_pd_proxy
   - near_sjc_airport_height_unknown  # v2 will replace with real ALUCP limits
 
-lidar_vintage_year_threshold: 2021   # LiDAR flown early 2020 (Phase 0 decision #4)
+# LiDAR flown early 2020. Threshold 2020 (Phase 1 checkpoint): 386 parcels report YEARBUILT 2020,
+# all non-single-family projects likely mid-construction during the flight.
+lidar_vintage_year_threshold: 2020

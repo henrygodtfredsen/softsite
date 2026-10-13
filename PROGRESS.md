@@ -1,6 +1,6 @@
 # Progress
 
-## Status: Phase 1 complete and live at https://softsite-sepia.vercel.app; waiting at the Phase 1 checkpoint for Bodie's approval (2026-10-13)
+## Status: Phase 1 approved (2026-10-13) and live at https://softsite-sepia.vercel.app. Phase 2 is waiting on Bodie's source-document downloads.
 
 ## Done
 
@@ -33,12 +33,11 @@
 - **Repo:** https://github.com/henrygodtfredsen/softsite (public).
 
 ## Next
-1. Phase 1 checkpoint (Bodie's approval).
-2. Phase 2 needs the PDFs in `docs/MANUAL_STEPS.md` §B.
+1. Phase 1 approved 2026-10-13. Public name: Henry Godtfredsen. LiDAR flag threshold: 2020.
+2. Phase 2 (zoning capacity) needs Bodie's downloads from `docs/MANUAL_STEPS.md`, Part 1.
 
 ## Open questions for Bodie
-- Public name: the LICENSE / git use "Henry Godtfredsen" and the README credit says "Bodie Godtfredsen". Which should appear publicly?
-- LiDAR vintage flag threshold: you chose `YEARBUILT ≥ 2021`. The flight was in early 2020, so buildings finished during 2020 may also be missing. Keep 2021, or use 2020?
+- None right now.
 
 ## Later TODOs
 - Contamination download instructions (before Phase 3, decision #6)

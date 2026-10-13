@@ -97,7 +97,9 @@ existing_FAR   = existing_GFA / lot_area
   - single-family homes
 
   I'll report the error rate in `docs/VALIDATION.md`.
-- **LiDAR vintage flag:** parcels with `YEARBUILT ≥ 2021` are flagged "building may be missing or wrong in 2020 LiDAR". The threshold lives in config.
+- **LiDAR vintage flag:** parcels with `YEARBUILT ≥ 2020` are flagged "building may be missing or wrong in 2020 LiDAR". The threshold lives in config.
+  - Bodie proposed 2021; at the Phase 1 checkpoint he left the call to Claude.
+  - 2020 was chosen because 386 parcels report `YEARBUILT` 2020, all non-single-family projects likely under construction during the early-2020 flight. That's more than the 162 built in 2021 or later.
 
 **Confidence flag per parcel:**
 
