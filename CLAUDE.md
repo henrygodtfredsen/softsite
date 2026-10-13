@@ -1,6 +1,23 @@
 # CLAUDE.md — project conventions
 
-**Read first, every session:** `PROJECT_BRIEF.md` (spec, source of truth), `PROGRESS.md` (status, open questions), then `docs/PLAN.md` and `docs/DATA_SOURCES.md` as needed.
+**Read first, every session:**
+1. `PROJECT_BRIEF.md` (spec, source of truth)
+2. `PROGRESS.md` (status, open questions)
+3. `docs/PLAN.md` (decisions log) and `docs/DATA_SOURCES.md` as needed
+
+**Product name:** SoftSite.
+
+**Repo location:** `~/Projects/softsite`. Keep it there; the Desktop is iCloud-synced, and iCloud breaks `.venv` and `node_modules`.
+
+## Commands
+- `uv run pipeline all` — fetch and process everything. Add `--refresh` to re-download today's data.
+- `uv run pipeline <parcels|addresses|plan_areas|export>` — run one step.
+- `uv run pytest` — pipeline tests.
+- `npm --prefix web install`, then `npm --prefix web run dev` — app at http://localhost:3000.
+- `npm --prefix web run lint` and `npx --prefix web tsc --noEmit` — checks before committing.
+
+## Next.js 16 note
+Read `web/AGENTS.md` and the bundled docs in `web/node_modules/next/dist/docs/` before writing Next.js code; APIs differ from older versions.
 
 ## Working agreement (short form; full text in PROJECT_BRIEF.md §3)
 - Stop at each phase checkpoint. Summarize, list decisions, and wait for Bodie's approval.
@@ -13,7 +30,7 @@
 - Bodie is not a professional engineer. Explain in plain language.
 
 ## Data access rules (learned in Phase 0)
-- Polite UA `sc-site-screener/0.1 (academic research project)`, ≤1 req/s, cache everything under `data/raw/<source>/<YYYY-MM-DD>/`.
+- Polite UA `softsite/0.1 (academic research project)`, ≤1 req/s, cache everything under `data/raw/<source>/<YYYY-MM-DD>/`.
 - City ArcGIS (Cloudflare WAF) blocks SQL-looking `where` clauses (e.g. `IS NULL`). Always query `where=1=1` and filter locally.
 - **Blocked to scripts:**
   - santaclaraca.gov (Akamai)
@@ -29,7 +46,12 @@
 
 ## Data conventions
 - **Canonical parcel key:** `apn` = 8-digit string (`09708058`). Display it as `097-08-058`. Normalize via one tested function; log unmatched values, never guess.
-- **Parcel universe:** City `RegionalBaseOpenData/7`, `LNDPARSTATUS='A'`, `PARTYPE='LND'`, dissolved by APN.
+- **City-only IDs:** 313 condo common areas carry a City-only ID instead of an APN (e.g. `097-90-00A`). Their key is `parcel_key = "CITY-097-90-00A"` and `apn` is null. Every other parcel's key is its APN.
+- **Parcel universe:**
+  - Mapped: City `RegionalBaseOpenData/7` with `LNDPARSTATUS='A'`, merged by key.
+  - Ranked: only `PARTYPE='LND'`.
+- **Don't show the City's per-parcel `ZoningURL` / `GenPlanURL`.** They're inconsistent; see `docs/DATA_SOURCES.md` §2.
+- **Map colors:** at most 3 categorical colors on the map, plus neutrals. Validate any palette change with the dataviz skill's `validate_palette.js --pairs all`.
 - **Projections:**
   - Compute in EPSG:6420 (CA State Plane III, US ft).
   - Serve the map in EPSG:4326.
@@ -42,5 +64,5 @@
 - Tests: pytest (pipeline math), Playwright smoke test.
 
 ## Git
-- Small commits with clear messages. The repo will be public.
-- Commit identity: set per Bodie's choice (pending as of Phase 0).
+- Small commits with clear messages. The repo is public: never commit personal data, staff contact details, or secrets.
+- Commit identity: Bodie's global git config (GitHub no-reply email).

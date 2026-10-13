@@ -1,34 +1,45 @@
 # Progress
 
-## Status: Phase 0 complete — waiting at checkpoint for approval (2026-10-13)
+## Status: Phase 1 built and verified locally. Next: push to GitHub and deploy to Vercel (walkthrough with Bodie), then the Phase 1 checkpoint (2026-10-13)
 
 ## Done
-- **Phase 0 recon (2026-10-13).** Every source in the brief was hit live.
-  - Findings: `docs/DATA_SOURCES.md`
-  - Plan, cost estimate, names, blockers: `docs/PLAN.md`
-- **Environment:**
-  - Node 24.16, npm 11.13, git 2.39, Homebrew 6.0
-  - `uv` 0.13.0 installed via Homebrew during Phase 0
-  - System Python is 3.9.6; uv will manage Python 3.12 for the pipeline
-- Repo initialized (`main`) with the brief and docs. No application code yet.
 
-## Next (after approval)
-- **Phase 1:** pipeline pulls city parcels + zoning; Next.js map with zoning colors, plan outlines, parcel panel, APN/address search; deploy to Vercel.
+### Phase 0: recon and plan (approved 2026-10-13)
+- Every source in the brief was hit live.
+  - Findings: `docs/DATA_SOURCES.md`
+  - Plan and decisions: `docs/PLAN.md`
+- Product name: **SoftSite**.
+
+### Phase 1: parcel base map
+- **Project home:** moved to `~/Projects/softsite`, out of iCloud (it broke the Python environment).
+- **Pipeline:** `uv run pipeline all`
+  - **parcels:** City Land Parcels + Zoning layers, layer-agreement check, multi-part merge, lot area
+  - **addresses:** City site addresses → parcel
+  - **plan_areas:** derived outlines
+  - **export:** files in `web/public/data/`
+  - 27 pytest tests pass.
+- **Web app (`web/`):** Next.js 16.4 + Tailwind + shadcn/ui + MapLibre 6 on an OpenFreeMap basemap (light/dark).
+  - Full-screen map colored by zoning family (3 colorblind-safe groups + neutrals, isolate-a-family legend)
+  - Plan-area outlines and labels; "Plan areas" color mode
+  - Parcel panel with source links and retrieval dates
+  - Address/APN search
+  - Mobile bottom sheet
+  - Lint, typecheck, and production build pass.
+- **Your manual checklist:** `docs/MANUAL_STEPS.md` (Projects Listing pages, Phase 2 PDFs, email draft to Planning).
+
+## Next
+1. Create the GitHub repo and push.
+2. Connect Vercel (Root Directory = `web`).
+3. Phase 1 checkpoint.
+4. Phase 2 needs the PDFs in `docs/MANUAL_STEPS.md` §B.
 
 ## Open questions for Bodie
-See the "Decisions needed" list at the Phase 0 checkpoint (also in `docs/PLAN.md` §8).
-1. Git commit identity (name + email, or GitHub no-reply email)
-2. Install `gh` and sign in; approve a free Vercel account
-3. PD parcels: use the General Plan density as a proxy? (`docs/PLAN.md` §4)
-4. Existing-building method + floor-height defaults (`docs/PLAN.md` §3)
-5. City Projects Listing: manual CSV, email the city, or skip?
-6. Contamination data: manual EnviroStor/GeoTracker download, or the dated 2023 snapshot as interim?
-7. Phase 2 source PDFs (zoning code chapters + specific plans), saved by Bodie
-8. Product name
-9. Anthropic API key + spend limit (needed by Phase 4)
-10. Airport layer: defer to v2?
+- LiDAR vintage flag threshold: you chose `YEARBUILT ≥ 2021`. The flight was in early 2020, so buildings finished during 2020 may also be missing. Keep 2021, or use 2020?
 
 ## Later TODOs
-- LICENSE (MIT, plus a note that data stays under each source's terms): add once the author name is confirmed
+- Contamination download instructions (before Phase 3, decision #6)
 - Retry FEMA NFHL from GitHub Actions
-- Verify the HE sites inventory (37 Table A sites) against the city's adopted appendix + March 2025 amendment
+- Verify the HE sites inventory against the City's adopted appendix + the 2025 amendment
+- Old Ironsides TOC rezoning area: no City GIS plan code; handle in Phase 2
+- APN 230-05-117: computed 1.659 ac vs published 0.488 ac. Check during Phase 2.
+- Mobile: the legend is hidden below 768 px wide; add a legend button

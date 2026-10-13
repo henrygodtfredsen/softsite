@@ -48,7 +48,7 @@ def test_parse_apn_list_simple_and_empty():
     assert parse_apn_list("097-08-058") == ["09708058"]
     assert parse_apn_list("Parcel Number: 230-05-021") == ["23005021"]
     assert parse_apn_list(None) == []
-    assert parse_apn_list("no parcel here, call 408-615-2450") == []
+    assert parse_apn_list("no parcel here, call 555-123-4567") == []
 
 
 def test_parse_apn_list_ignores_shorthand_without_a_preceding_apn():

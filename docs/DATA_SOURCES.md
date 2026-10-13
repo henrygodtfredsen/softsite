@@ -137,6 +137,14 @@ The ECR codes from the brief (MUNC, MUCC, MURC) and the Patrick Henry codes (VHD
 
 **Map size estimate:** 2,000 features as GeoJSON (4 properties, 6-decimal coordinates) are 0.73 MB raw / 0.09 MB gzipped. Extrapolated to 27.7k parcels, that's about **10 MB raw / 1.3 MB gzipped**, well under the brief's 5 MB-gzipped PMTiles threshold. GeoJSON is fine for v0.
 
+**Phase 1 build findings (`uv run pipeline parcels`, 2026-10-13):**
+- **Mapped:** 27,706 active parcels: 27,102 land, 446 common area, 151 right-of-way, 7 flood-control easement.
+- **Dropped:** 2 active features with no geometry.
+- **Merged:** 28 multi-part parcels, each merged into one shape. None had pieces with conflicting zoning, General Plan, plan area, or parcel type.
+- **Repaired:** 1 invalid polygon.
+- **313 condo common areas carry a City-only ID, not an assessor APN** (letter suffix, e.g. `097-90-00A`). They stay on the map under that ID (`parcel_key = CITY-097-90-00A`), are labeled as such in the panel, and are logged in `data/processed/unmatched_apns.csv`. They can never join to County or State data.
+- **Lot-area check:** across the 14,980 single-part parcels where the City publishes `ACREAGE`, our computed lot area matches with a **median difference of 0.2%**. 92.1% agree within 1%, and all but one within 4%. The exception is APN 230-05-117: 1.659 ac computed vs. 0.488 ac published. The published figure is likely stale.
+
 ## 2. City GIS — Zoning Codes ✅
 
 **URL:** `https://map.santaclaraca.gov/maps/rest/services/OPENDATA/RegionalZoningOpenData/MapServer/0`
@@ -160,6 +168,14 @@ Its `HistoricParcelType` counts (all features, active and retired): PHR 1,639 ·
 `maxRecordCount` is 1,000, so pull with `resultOffset` paging (30 requests).
 
 > ⚠️ **Stale links:** `ZoningURL` values point to `codepublishing.com`. That site now redirects to **eCode360** (`https://ecode360.com/SA4626`), so these links are stale and citations should use eCode360.
+>
+> ⚠️ **Unreliable links (found in Phase 1):** the per-parcel `ZoningURL` and `GenPlanURL` values are inconsistent within a single code:
+> - R3 parcels point at **16 different** code chapters, MUCC at 12, PD at 11.
+> - Some General Plan links go to the wrong section (e.g. an Urban Center/Entertainment District parcel links to "#parks_open_space").
+>
+> The app does **not** show these links. It links the zoning-code and General Plan home pages, and Phase 2 cites exact sections from `config/zoning_rules.csv`.
+>
+> **Layer agreement check (Phase 1):** on all 29,971 shared OBJECTIDs, the Zoning layer and the Land Parcels layer agree exactly on zoning, specific plan, and status (0 mismatches). That's the evidence that the OBJECTID join is safe. The pipeline re-checks it on every run and aborts above 0.5% disagreement.
 
 **OPENDATA folder listing:** this worked for me with the UA above. It lists four services: `CSCAddress_Active`, `RegionalBaseOpenData`, `RegionalGeneralPlanOpenData`, `RegionalZoningOpenData`.
 
@@ -176,6 +192,11 @@ This has the same `GPLANCRT` field and domain as #1. There's no need to pull it 
   - `FULLADDR`, `ADDRNUM`, `FULLNAME`, `SITEADUN`, `MUNICIPALITY`, `STADZIP5`
   - lat/long
   - no APN, so APN comes via spatial join or the county crosswalk
+
+  **Phase 1:** this layer powers address search. Each point is matched to the parcel it sits in:
+  - 34,643 inside a parcel
+  - 39 matched to the nearest parcel within 50 ft (points sitting on a lot line)
+  - 1 unmatched
 - The **`LAYERS/RegionalBase_Lucity`** and **`LAYERS/BaseMap`** services named in the brief also work. They're the same layers at `maxRecordCount` 1,000, so `OPENDATA` is preferred.
 - **`OPENDATA/CSCAddress_Active`** exposes `MAILING1` / `MAILING2` fields. I'm **not ingesting this layer** because it may hold mailing-address information we don't need (privacy rule #9).
 
@@ -423,6 +444,11 @@ Updated monthly per Zillow's data page. Zillow's page links its Terms of Use and
 
 The code moved from codepublishing.com to **eCode360** (`https://ecode360.com/SA4626`), which is behind a Cloudflare challenge. The adopted specific plans are on santaclaraca.gov (Akamai, blocked; see #12). Phase 2 needs these documents for every citation in `config/zoning_rules.csv`. See Decisions.
 
+**Phase 1 notes:**
+- Title 18 was comprehensively rewritten. The current chapters include 18.06 Zoning Map and Zones, 18.10 Residential, 18.12 Commercial, 18.14 Mixed Use, and 18.30 General Development Standards. The old chapter numbers in City GIS (18.38 etc.) are obsolete.
+- The City's Specific Plans page also lists an **Old Ironsides Transit-Oriented Communities (TOC) Rezonings** area that has no City GIS plan code.
+- Bodie's download checklist is in `docs/MANUAL_STEPS.md`.
+
 ## 23. Anthropic API ✅
 
 The model ID **`claude-sonnet-5-5`** is confirmed current (Anthropic model table cached 2026-10-06).
@@ -440,6 +466,11 @@ Cost estimate is in `docs/PLAN.md`. Needs an API key from you before Phase 4.
 
 ## Context facts for the methodology page (verified 2026-10-13)
 
-- **El Camino Real Specific Plan:** adopted by City Council in **May 2026** (unanimous), with capacity for **~4,400 homes**, up to 6 stories and up to 100 du/ac in parts; plan area about 250 acres. Source: [SV@Home, May 28 2026](https://siliconvalleyathome.org/santa-clara-takes-a-big-step-forward-on-el-camino-real-housing/). ✅ matches the brief.
+- **El Camino Real Specific Plan:** adopted by City Council on **May 19, 2026**. The plan area is about 250 acres, from Pratt Place to the Santa Clara/Sunnyvale city limit. Source: the [City's ECR Specific Plan page](https://www.santaclaraca.gov/our-city/departments-a-f/community-development/planning-division/specific-plans/el-camino-real-specific-plan-revision), checked 2026-10-13. Further figures from [SV@Home, May 28 2026](https://siliconvalleyathome.org/santa-clara-takes-a-big-step-forward-on-el-camino-real-housing/), an advocacy summary to be confirmed against the plan text in Phase 2:
+  - unanimous vote
+  - capacity for **~4,400 homes**
+  - up to 6 stories and up to 100 du/ac in parts
+
+  ✅ matches the brief.
 - **Patrick Henry Drive Specific Plan:** adopted **March 22, 2022**. The brief's "about 76 acres" comes from the 2019 environmental notice; the **adopted plan says ~73.6 acres**, and the city page says ~74. Densities of **50–250 du/ac** are per [San José Spotlight](https://sanjosespotlight.com/santa-clara-76-acres-rezoning-could-add-thousands-of-homes); capacity is up to 12,000 homes. ⚠️ Use "about 74 acres" and cite the adopted plan once we have it.
 - **RHNA 2023–2031:** 11,632 units (2,872 VLI / 1,653 LI / 1,981 Mod / 5,126 Above-Mod).
