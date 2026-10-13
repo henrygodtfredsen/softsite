@@ -1,6 +1,6 @@
 # Progress
 
-## Status: Phase 1 built and verified locally. Next: push to GitHub and deploy to Vercel (walkthrough with Bodie), then the Phase 1 checkpoint (2026-10-13)
+## Status: Phase 1 complete and live at https://softsite-sepia.vercel.app; waiting at the Phase 1 checkpoint for Bodie's approval (2026-10-13)
 
 ## Done
 
@@ -27,13 +27,17 @@
   - Lint, typecheck, and production build pass.
 - **Your manual checklist:** `docs/MANUAL_STEPS.md` (Projects Listing pages, Phase 2 PDFs, email draft to Planning).
 
+- **Live site:** https://softsite-sepia.vercel.app
+  - Vercel Hobby, Root Directory `web`; every push to `main` redeploys.
+  - Verified 2026-10-13: all data files 200 (Brotli-compressed), no console errors, search → panel works.
+- **Repo:** https://github.com/henrygodtfredsen/softsite (public).
+
 ## Next
-1. Create the GitHub repo and push.
-2. Connect Vercel (Root Directory = `web`).
-3. Phase 1 checkpoint.
-4. Phase 2 needs the PDFs in `docs/MANUAL_STEPS.md` §B.
+1. Phase 1 checkpoint (Bodie's approval).
+2. Phase 2 needs the PDFs in `docs/MANUAL_STEPS.md` §B.
 
 ## Open questions for Bodie
+- Public name: the LICENSE / git use "Henry Godtfredsen" and the README credit says "Bodie Godtfredsen". Which should appear publicly?
 - LiDAR vintage flag threshold: you chose `YEARBUILT ≥ 2021`. The flight was in early 2020, so buildings finished during 2020 may also be missing. Keep 2021, or use 2020?
 
 ## Later TODOs

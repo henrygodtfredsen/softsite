@@ -1,6 +1,6 @@
 # SoftSite
 
-**A redevelopment screener for every parcel in Santa Clara, California.** SoftSite looks for "soft sites": parcels where current zoning allows much more than what's built today. Every number links back to its public source and retrieval date.
+**Live: https://softsite-sepia.vercel.app** · **A redevelopment screener for every parcel in Santa Clara, California.** SoftSite looks for "soft sites": parcels where current zoning allows much more than what's built today. Every number links back to its public source and retrieval date.
 
 > **Status: v0 (Phase 1 of 8).** The parcel base map is live: zoning family, General Plan, specific-plan areas, historic and flood notes, lot area, year built, and address/APN search for all 27,706 parcels. Zoning capacity, scoring, the entitlement pipeline, AI site memos, and feasibility come in later phases.
 
